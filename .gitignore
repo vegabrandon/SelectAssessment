@@ -1,0 +1,37 @@
+SelectAssessmentAPI/HELP.md
+SelectAssessmentAPI/.gradle
+SelectAssessmentAPI/build/
+SelectAssessmentAPI/!gradle/wrapper/gradle-wrapper.jar
+SelectAssessmentAPI/!**/src/main/**/build/
+SelectAssessmentAPI/!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
