@@ -1,10 +1,11 @@
 package com.vegabrandon.Select.services;
 
 import com.vegabrandon.Select.controller.model.InvoiceSubmissionRequest;
-import com.vegabrandon.Select.controller.model.InvoiceSubmissionResponse;
+import com.vegabrandon.Select.controller.model.InvoiceEndpointResponse;
 import com.vegabrandon.Select.repository.InvoiceRepository;
 import com.vegabrandon.Select.services.model.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,21 +13,33 @@ import java.util.List;
 @Service
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
 
     @Autowired
-    public InvoiceService(InvoiceRepository invoiceRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, SimpMessagingTemplate simpMessagingTemplate) {
         this.invoiceRepository = invoiceRepository;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    public InvoiceSubmissionResponse addInvoice(InvoiceSubmissionRequest invoice) {
+    public InvoiceEndpointResponse addInvoice(InvoiceSubmissionRequest invoice) {
         this.invoiceRepository.addInvoice(mapInvoiceSubmissionRequestToInvoice(invoice));
-        InvoiceSubmissionResponse response = new InvoiceSubmissionResponse();
-        response.setMessage("invoice submitted successfully");
-        return response;
+        sendAllInvoicesMessage();
+        return new InvoiceEndpointResponse("invoice submitted successfully");
+    }
+
+    public void sendAllInvoicesMessage() {
+        simpMessagingTemplate.convertAndSend("/topic/invoices", getAllInvoicesPending());
     }
 
     public List<Invoice> getAllInvoicesPending() {
         return this.invoiceRepository.getAllInvoicesPending();
+    }
+
+    public InvoiceEndpointResponse approveInvoice(String invoiceId) {
+        this.invoiceRepository.approveInvoice(invoiceId);
+        sendAllInvoicesMessage();
+        return new InvoiceEndpointResponse("invoice approved successfully");
     }
 
     private Invoice mapInvoiceSubmissionRequestToInvoice(InvoiceSubmissionRequest invoice) {

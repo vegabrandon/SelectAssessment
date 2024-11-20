@@ -1,9 +1,11 @@
 package com.vegabrandon.Select.controller.model;
 
-public class InvoiceSubmissionResponse {
+public class InvoiceEndpointResponse {
     private String message;
 
-    public InvoiceSubmissionResponse() {}
+    public InvoiceEndpointResponse(String message) {
+        this.message = message;
+    }
 
     public String getMessage() {
         return message;

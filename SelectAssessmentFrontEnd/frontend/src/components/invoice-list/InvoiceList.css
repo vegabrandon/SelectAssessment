@@ -1,0 +1,18 @@
+.invoice-list-containers {
+    width:80vw;
+    margin: auto;
+    height: 80vh;
+    min-width: 695px;
+    overflow-x: auto;
+}
+
+.no-border {
+    border-bottom: none !important;
+}
+
+.invoice-list-row th {
+    color: white;
+    font-weight: 900;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}

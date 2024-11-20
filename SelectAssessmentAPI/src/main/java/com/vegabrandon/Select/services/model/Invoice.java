@@ -1,9 +1,12 @@
 package com.vegabrandon.Select.services.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "INVOICES")
 public class Invoice {
+    @Id
+    private String id;
     private String invoice_number;
     private String total;
     private String currency;
@@ -12,6 +15,14 @@ public class Invoice {
     private String vendor_name;
     private String remittance_address;
     private String status;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getInvoice_number() {
         return invoice_number;
