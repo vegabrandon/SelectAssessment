@@ -42,7 +42,7 @@ function InvoiceList() {
                     <TableBody>
                     {
                     invoices.length ? 
-                        invoices.map(invoice => <Invoice invoice={invoice} />) :
+                        invoices.map(invoice => <Invoice invoice={invoice} key={invoice.id}/>) :
                         <TableRow className="invoice-list-row no-border">
                             <TableCell className='no-border'>No current pending invoices</TableCell>
                         </TableRow>

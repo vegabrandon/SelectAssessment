@@ -1,9 +1,12 @@
 import { approveInvoice } from '../../services/invoiceApiService.ts';
 import './Invoice.css';
 import { TableRow, TableCell, Button, CircularProgress } from '@mui/material';
+
 const Invoice = ({ invoice }) => {
     let approveLoading = false;
-
+    const backgroundColor = '#ce0981';
+    const textTransform = 'capitalize';
+    const styles = {backgroundColor, textTransform};
     const approve = (id) => {
         approveLoading = true;
         approveInvoice(id)
@@ -15,7 +18,7 @@ const Invoice = ({ invoice }) => {
             })
     }
 
-    return <TableRow className="invoice-list-row">
+    return <TableRow className="invoice-list-row" id={invoice.id}>
         <TableCell>{invoice.invoice_number}</TableCell>
         <TableCell>{invoice.vendor_name}</TableCell>
         <TableCell>{invoice.remittance_address}</TableCell>
@@ -26,7 +29,12 @@ const Invoice = ({ invoice }) => {
             {
                 approveLoading ? 
                     <CircularProgress /> :
-                    <Button variant="contained" onClick={() => approve(invoice.id)}>Approve</Button>
+                    <Button 
+                        variant="contained" 
+                        style={styles}
+                        onClick={() => approve(invoice.id)}>
+                            Approve
+                    </Button>
             }
         </TableCell>
     </TableRow>
