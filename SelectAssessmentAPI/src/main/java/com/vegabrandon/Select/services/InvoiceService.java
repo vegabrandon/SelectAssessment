@@ -7,6 +7,8 @@ import com.vegabrandon.Select.services.model.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
@@ -21,6 +23,10 @@ public class InvoiceService {
         InvoiceSubmissionResponse response = new InvoiceSubmissionResponse();
         response.setMessage("invoice submitted successfully");
         return response;
+    }
+
+    public List<Invoice> getAllInvoicesPending() {
+        return this.invoiceRepository.getAllInvoicesPending();
     }
 
     private Invoice mapInvoiceSubmissionRequestToInvoice(InvoiceSubmissionRequest invoice) {

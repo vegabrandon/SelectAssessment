@@ -3,11 +3,17 @@ package com.vegabrandon.Select.repository;
 import com.vegabrandon.Select.services.model.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class InvoiceRepository {
     private final MongoTemplate mongoTemplate;
+    private static final String STATUS = "status";
+    private static final String PENDING = "pending";
 
     @Autowired
     public InvoiceRepository(MongoTemplate mongoTemplate) {
@@ -16,5 +22,11 @@ public class InvoiceRepository {
 
     public void addInvoice(Invoice invoice) {
         this.mongoTemplate.save(invoice);
+    }
+
+    public List<Invoice> getAllInvoicesPending() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(STATUS).is(PENDING));
+        return this.mongoTemplate.find(query, Invoice.class);
     }
 }
